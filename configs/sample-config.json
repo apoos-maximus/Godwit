@@ -1,0 +1,20 @@
+{
+  "godwit-interface": "god-net",
+  "ip-list": [
+    {
+      "ip": "192.168.1.5",
+      "prefixlen": 24,
+      "tag": "lion-vm"
+    },
+    {
+      "ip": "45.79.121.20",
+      "prefixlen": 20,
+      "tag": "cat-vm"
+    },
+    {
+      "ip": "45.79.130.20",
+      "prefixlen": 20,
+      "tag": "mouse-vm"
+    }
+  ]
+}
