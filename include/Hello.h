@@ -1,0 +1,1 @@
+const int global_value = 100;
