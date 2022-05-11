@@ -13,7 +13,12 @@ endmacro()
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -std=c++14")
 set (source_dir "${PROJECT_SOURCE_DIR}/src")
-include_directories("${PROJECT_SOURCE_DIR}/include")
+set (external_libs "${PROJECT_SOURCE_DIR}/libs")
+
+set (rapidjson_lib "${external_libs}/rapidjson")
+
+include_directories("${PROJECT_SOURCE_DIR}/include" "${rapidjson_lib}/include")
+
 
 file (GLOB source_files "${source_dir}/*.cpp")
 add_executable (godwit-client ${source_files})
