@@ -11,16 +11,20 @@ macro(print_all_variables)
     message(STATUS "print_all_variables------------------------------------------}")
 endmacro()
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -std=c++14")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++14")
 set (source_dir "${PROJECT_SOURCE_DIR}/src")
 set (external_libs "${PROJECT_SOURCE_DIR}/libs")
 
 set (rapidjson_lib "${external_libs}/rapidjson")
+set (tuntap_dir ${source_dir}/tuntap)
 
-include_directories("${PROJECT_SOURCE_DIR}/include" "${rapidjson_lib}/include")
+include_directories(${PROJECT_SOURCE_DIR}/include ${rapidjson_lib}/include ${tuntap_dir})
 
+set (client_files ${source_dir}/client/Hello.cpp)
+set (relay_files ${source_dir}/relay/gw_relay.cpp)
+set (trial_files ${source_dir}/trial.cpp)
+set (tuntap_files ${tuntap_dir}/gwtuntap.cpp)
 
-file (GLOB source_files "${source_dir}/*.cpp")
-add_executable (godwit-client ${source_files})
-
-
+add_executable (godwit-client ${client_files})
+add_executable (godwit_relay ${relay_files})
+add_executable (gw_trial ${trial_files} ${tuntap_files})
