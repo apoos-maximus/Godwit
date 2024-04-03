@@ -17,13 +17,21 @@ set (external_libs "${PROJECT_SOURCE_DIR}/libs")
 
 set (rapidjson_lib "${external_libs}/rapidjson")
 set (tuntap_dir ${source_dir}/tuntap)
+set (tcp_dir ${source_dir}/tcp)
+set (utils_dir ${source_dir}/gwutils)
 
-include_directories(${PROJECT_SOURCE_DIR}/include ${rapidjson_lib}/include ${tuntap_dir})
+include_directories(${PROJECT_SOURCE_DIR}/include 
+                    ${rapidjson_lib}/include 
+                    ${tuntap_dir} 
+                    ${tcp_dir}
+                    ${utils_dir})
 
-set (client_files ${source_dir}/client/Hello.cpp)
+set (client_files ${source_dir}/client/gw_client.cpp)
 set (relay_files ${source_dir}/relay/gw_relay.cpp)
 set (trial_files ${source_dir}/trial.cpp)
 set (tuntap_files ${tuntap_dir}/gwtuntap.cpp)
+set (tcp_files ${tcp_dir}/gwtcp.cpp)
+set (utils_file ${utils_dir}/gwutils.cpp)
 
 add_executable (godwit-client ${client_files})
 add_executable (godwit_relay ${relay_files})
