@@ -20,7 +20,8 @@ set (tuntap_dir ${source_dir}/tuntap)
 set (tcp_dir ${source_dir}/tcp)
 set (utils_dir ${source_dir}/gwutils)
 
-include_directories(${PROJECT_SOURCE_DIR}/include 
+include_directories(${PROJECT_SOURCE_DIR}/include
+                    ${source_dir}
                     ${rapidjson_lib}/include 
                     ${tuntap_dir} 
                     ${tcp_dir}
@@ -31,8 +32,15 @@ set (relay_files ${source_dir}/relay/gw_relay.cpp)
 set (trial_files ${source_dir}/trial.cpp)
 set (tuntap_files ${tuntap_dir}/gwtuntap.cpp)
 set (tcp_files ${tcp_dir}/gwtcp.cpp)
-set (utils_file ${utils_dir}/gwutils.cpp)
+set (utils_files ${utils_dir}/gwutils.cpp)
 
-add_executable (godwit-client ${client_files})
-add_executable (godwit_relay ${relay_files})
-add_executable (gw_trial ${trial_files} ${tuntap_files})
+add_executable (godwit_client   ${client_files}
+                                ${tcp_files}
+                                ${utils_files})
+
+add_executable (godwit_relay    ${relay_files}
+                                ${tcp_files}
+                                ${utils_files})
+
+add_executable (gw_trial        ${trial_files}
+                                ${tuntap_files})

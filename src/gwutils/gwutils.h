@@ -3,5 +3,5 @@
 #include <arpa/inet.h>
 
 namespace gwutils {
-    void parse_sockaddr(struct sockaddr addr, socklen_t socklen);
+    void parse_sockaddr(struct sockaddr *addr, socklen_t socklen);
 }

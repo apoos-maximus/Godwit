@@ -55,21 +55,28 @@ int gwtcp::server_get_clientfd(char *intf_ip, int port){
         perror("Error opening server socket");
         exit (-1);
     } else {
+        std::cout << "Opened Server Socket" << std::endl;
+        gwutils::parse_sockaddr(&servaddr, servaddrlen);
+        std::cout << "Waiting on client connection" << std::endl;
         int clfd = accept (servfd, &clientaddr, &clientaddrlen);
         if (clfd < 0) {
             std::cout << "Failed to accept client connection " << clfd << std::endl;
             exit (-1); 
         } else {
             std::cout << "Accepted client connection " << clfd << std::endl;
-            gwutils::parse_sockaddr(clientaddr, clientaddrlen);
+            gwutils::parse_sockaddr(&clientaddr, clientaddrlen);
             return clfd;
         }
     }
 
 }
 
-int gwtcp::send_pkt_to_clientfd(int client_fd, char *pktbuf,  int pktlen) {
+int gwtcp::server_send_pkt_to_clientfd(int client_fd, char *pktbuf,  int pktlen) {
     return send(client_fd, pktbuf, pktlen, 0);
+}
+
+int gwtcp::server_disconnect_client(int clientfd) {
+    return shutdown(clientfd, SHUT_RDWR);
 }
 
 static 
@@ -108,7 +115,7 @@ connect_retry(int domain, int type, int protocol,
     return (-1);
 }
 
-int gwtcp::client_connect(char *serv_ip, int serv_port) {
+int gwtcp::client_connect_to_server(char *serv_ip, int serv_port) {
     struct sockaddr servaddr;
     socklen_t servaddrlen = 0;
 
@@ -134,6 +141,10 @@ int gwtcp::client_connect(char *serv_ip, int serv_port) {
     }
 }
 
-int gwtcp::read_pkt_from_server(int servfd, char *pktbuf, int buflen){
+int gwtcp::client_read_pkt_from_server(int servfd, char *pktbuf, int buflen){
    return recv(servfd, pktbuf, buflen, 0);
+}
+
+int gwtcp::client_disconnect_from_server(int servfd) {
+    return shutdown(servfd, SHUT_RDWR);
 }
